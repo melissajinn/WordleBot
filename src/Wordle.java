@@ -70,21 +70,40 @@ public class Wordle {
     }
 
     public static WordleSolve getSolver(Scanner scan){
-        Wordlesolve[] solvers = {new NoDupesSolver(),};
+        WordleSolve[] solvers = {new NoDupesSolver(),};
 
         int choice = 0;
 
-        while(true){
+        while(true) {
             System.out.println("What solver/strategy should I use?");
 
-            for(int i = 0; i < solvers.length; i ++){
-                if(i == 0){
+            for (int i = 0; i < solvers.length; i++) {
+                if (i == 0) {
                     System.out.println("'" + i + ": " + solvers[i].getName() + " (default)");
-                }else{
+                } else {
                     System.out.println("'" + i + ": " + solvers[i].getName());
                 }
             }
+
+            try {
+                String input = in.nextLine();
+
+                if (input.equals("")) {
+                    choice = 0;
+                    break;
+                } else {
+                    choice = Integer.parseInt(input);
+                    if (choice >= 0 && choice < solvers.length) {
+                        break;
+                    }
+                }
+            } catch (Exception e) {}
+
+            System.out.println("Error: Invalid Solver");
         }
+
+        WordleSolve solverChoice = solvers[choice];
+        return solverChoice;
     }
 
 }
